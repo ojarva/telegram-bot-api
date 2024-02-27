@@ -11,6 +11,16 @@ import (
 	"strings"
 )
 
+func NewMessageReaction(chatID int64, messageID int, reactions []ReactionType) MessageReactionConfig {
+	return MessageReactionConfig{
+		BaseChat: BaseChat{
+			ChatID:           chatID,
+			ReplyToMessageID: messageID,
+		},
+		Reaction: reactions,
+	}
+}
+
 // NewMessage creates a new Message.
 //
 // chatID is where to send it, text is the message text.

@@ -321,6 +321,30 @@ func (edit BaseEdit) params() (Params, error) {
 	return params, err
 }
 
+type ReactionType struct {
+	Type  string `json:"type"`
+	Emoji string `json:"emoji"`
+}
+
+type MessageReactionConfig struct {
+	BaseChat
+	Reaction []ReactionType
+}
+
+func (config MessageReactionConfig) params() (Params, error) {
+	params, err := config.BaseChat.params()
+	if err != nil {
+		return params, err
+	}
+	params.AddNonEmpty("type", "emoji")
+	err = params.AddInterface("emoji", config.Reaction)
+	return params, err
+}
+
+func (config MessageReactionConfig) method() string {
+	return "setMessageReaction"
+}
+
 // MessageConfig contains information about a SendMessage request.
 type MessageConfig struct {
 	BaseChat
